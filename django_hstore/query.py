@@ -222,7 +222,10 @@ class HStoreQuerySet(QuerySet):
 
 
 if GEODJANGO_INSTALLED:
-    from django.contrib.gis.db.models.query import GeoQuerySet
+    if django.VERSION[0] == 1:
+        from django.contrib.gis.db.models.query import GeoQuerySet
+    else:
+        GeoQuerySet = QuerySet
 
     if django.VERSION[:2] <= (1, 7):
         from django.contrib.gis.db.models.sql.query import GeoQuery

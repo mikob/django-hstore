@@ -30,7 +30,9 @@ class HStoreVirtualMixin(object):
         # Connect myself as the descriptor for this field
         setattr(cls, name, self)
         # add field to class
-        if DJANGO_VERSION[:2] >= (1, 8):
+        if DJANGO_VERSION[0] >= 2:
+            cls._meta.add_field(self, private=True)
+        elif DJANGO_VERSION[:2] >= (1, 8):
             # virtual=True available since django 1.8
             cls._meta.add_field(self, virtual=True)
         else:
